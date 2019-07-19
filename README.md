@@ -1,2 +1,0 @@
-# GiphyReactWebsite
-Created with CodeSandbox
