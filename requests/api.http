@@ -1,0 +1,1 @@
+GET https://api.giphy.com/v1/gifs/trending?api_key=yhXkeAORtwThl9gFH4mX6nNBMScaBtqF&limit=25&rating=G
