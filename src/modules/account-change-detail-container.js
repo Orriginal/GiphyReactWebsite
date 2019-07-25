@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import GiphyGridComponent from './giphy-grid-component';
+import ChangeDetailComponent from './account-change-detail-component';
 import * as actions from '../store/actions';
 
 const mapStateToProps = state => {
   return {
-    itemsArray: state.giphy.itemsArray,
-    filterOptions: state.giphy.filterOptions
+    // TODO
+    account: state.authentication.account
   };
 };
 
@@ -20,4 +20,4 @@ const mapDispatch = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatch
-)(GiphyGridComponent);
+)(ChangeDetailComponent);

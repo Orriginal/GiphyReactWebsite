@@ -7,4 +7,18 @@ const setItems = someNewArray => {
   };
 };
 
-export { setItems };
+const setAccount = someNewObj => {
+  return {
+    type: constants.SET_ACCOUNT,
+    payload: someNewObj
+  };
+};
+
+const setFilter = filterOptions => {
+  return {
+    type: constants.SET_FILTER,
+    payload: filterOptions
+  };
+};
+
+export { setItems, setAccount, setFilter };

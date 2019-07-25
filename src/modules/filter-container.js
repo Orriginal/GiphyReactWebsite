@@ -1,12 +1,11 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import GiphyGridComponent from './giphy-grid-component';
+import FilterComponent from './filter-component';
 import * as actions from '../store/actions';
 
 const mapStateToProps = state => {
   return {
-    itemsArray: state.giphy.itemsArray,
     filterOptions: state.giphy.filterOptions
   };
 };
@@ -20,4 +19,4 @@ const mapDispatch = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatch
-)(GiphyGridComponent);
+)(FilterComponent);

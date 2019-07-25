@@ -1,37 +1,42 @@
-import React, { useEffect, useState, useContext } from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { makeStyles } from "@material-ui/core/styles";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import Box from "@material-ui/core/Box";
-import { Link } from "react-router-dom";
-import GridListTileBar from "@material-ui/core/GridListTileBar";
+import React, { useEffect, useState, useContext } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import Box from '@material-ui/core/Box';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import GridListTile from '@material-ui/core/GridListTile';
+import { Link } from 'react-router-dom';
+import FilterContainer from './filter-container';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around"
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around'
   },
   gridList: {
-    width: "100%",
-    height: "auto"
+    width: '100%',
+    height: 'auto'
   },
   titleBar: {
     background:
-      "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
-      "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)"
+      'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+      'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)'
   },
   icon: {
-    color: "white"
+    color: 'white'
   }
 }));
 
 export default function GiphyGridComponent(props) {
   const classes = useStyles();
-  const { itemsArray, actions } = props;
-  const [windowPostition, setWindowPosition] = useState("md");
-
+  const { itemsArray, filterOptions, actions } = props;
+  const items = filterOptions.hasUser
+    ? itemsArray.filter(item => {
+        return item.username.length > 0;
+      })
+    : itemsArray;
+  const [windowPostition, setWindowPosition] = useState('md');
   const grid = {
     xs: {
       col: [12, 12],
@@ -56,31 +61,31 @@ export default function GiphyGridComponent(props) {
 
       switch (true) {
         case windowWidth < 600:
-          setWindowPosition("xs");
+          setWindowPosition('xs');
           break;
         case windowWidth < 1000:
-          setWindowPosition("ms");
+          setWindowPosition('ms');
           break;
         case windowWidth < 1800:
-          setWindowPosition("md");
+          setWindowPosition('md');
           break;
         default:
-          setWindowPosition("md");
+          setWindowPosition('md');
           break;
       }
     };
     handleResize();
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     fetchItems();
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [props.q]);
 
   const fetchItems = async () => {
-    const key = "yhXkeAORtwThl9gFH4mX6nNBMScaBtqF";
+    const key = 'yhXkeAORtwThl9gFH4mX6nNBMScaBtqF';
     const limit = props.limit ? props.limit : 25;
     const data = await fetch(
       props.q
@@ -94,7 +99,7 @@ export default function GiphyGridComponent(props) {
     await actions.setItems(items.data);
   };
 
-  if (!Object.keys(itemsArray).length) {
+  if (!Object.keys(items).length) {
     return <CircularProgress />;
   }
 
@@ -107,23 +112,24 @@ export default function GiphyGridComponent(props) {
 
   return (
     <Box className={classes.root} cols={12}>
+      <FilterContainer />
       <GridList
         cellHeight={grid[windowPostition].rowHeight}
         className={classes.gridList}
         cols={12}
       >
-        {itemsArray.map((item, key) => (
+        {items.map((item, key) => (
           <GridListTile
-            key={item.images["fixed_width"].url}
+            key={item.images['fixed_width'].url}
             cols={itemColCount(key)}
           >
-            <img src={item.images["fixed_width"].url} alt="gif" />
+            <img src={item.images['fixed_width'].url} alt='gif' />
 
             <Link to={`/item/${item.id}`}>
               <GridListTileBar
                 title={item.title}
-                titlePosition="top"
-                actionPosition="left"
+                titlePosition='top'
+                actionPosition='left'
                 className={classes.titleBar}
               />
             </Link>
