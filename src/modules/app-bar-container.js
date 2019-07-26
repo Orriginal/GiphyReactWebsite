@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import AccountOverviewComponent from './account-overview-component';
+import SearchAppBar from './app-bar-component';
 import * as actions from '../store/actions';
 
 const mapStateToProps = state => {
@@ -19,4 +19,4 @@ const mapDispatch = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatch
-)(AccountOverviewComponent);
+)(SearchAppBar);

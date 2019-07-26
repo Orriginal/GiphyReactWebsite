@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import SearchAppBar from './searchAppBar';
 import Homepage from './homepage';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -10,6 +9,7 @@ import GiphyItemContainer from './modules/giphy-item-container';
 import Search from './search';
 import AccountChangeDetailContainer from './modules/account-change-detail-container';
 import AccountOverviewContainer from './modules/account-overview-container';
+import AppBarContainer from './modules/app-bar-container';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         {/* HTML element en attribute style-normalizations (ipv normalize.css)*/}
         <CssBaseline />
         <header>
-          <SearchAppBar search={false} />
+          <AppBarContainer search={false} />
         </header>
         <main>
           <Switch>
