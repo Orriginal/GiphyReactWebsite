@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Homepage from './homepage';
+import Homepage from './modules/home/homepage';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import GiphyItemContainer from './modules/giphy-item-container';
-import Search from './search';
-import AccountChangeDetailContainer from './modules/account-change-detail-container';
-import AccountOverviewContainer from './modules/account-overview-container';
-import AppBarContainer from './modules/app-bar-container';
+import GiphyItemContainer from './modules/giphy-grid/giphy-item-container';
+import Search from './modules/search/search';
+import AccountChangeDetailContainer from './modules/account/account-change-detail-container';
+import AccountOverviewContainer from './modules/account/account-overview-container';
+import AppBarContainer from './modules/app-bar/app-bar-container';
 
 function App() {
   return (

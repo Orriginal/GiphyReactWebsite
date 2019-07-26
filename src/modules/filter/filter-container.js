@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import FilterComponent from './filter-component';
-import * as actions from '../store/actions';
+import * as actions from '../../store/actions';
 
 const mapStateToProps = state => {
   return {

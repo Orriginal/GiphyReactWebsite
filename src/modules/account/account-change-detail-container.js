@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import AccountOverviewComponent from './account-overview-component';
-import * as actions from '../store/actions';
+import ChangeDetailComponent from './account-change-detail-component';
+import * as actions from '../../store/actions';
 
 const mapStateToProps = state => {
   return {
@@ -19,4 +19,4 @@ const mapDispatch = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatch
-)(AccountOverviewComponent);
+)(ChangeDetailComponent);

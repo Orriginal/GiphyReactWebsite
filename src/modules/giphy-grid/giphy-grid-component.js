@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import GridListTile from '@material-ui/core/GridListTile';
 import { Link } from 'react-router-dom';
-import FilterContainer from './filter-container';
+import FilterContainer from '../filter/filter-container';
 
 const useStyles = makeStyles(theme => ({
   root: {

@@ -23,14 +23,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function ChangeDetailComponent({ account, actions }) {
   const classes = useStyles();
-  const [values, setValues] = useState({
-    firstName: account.firstName,
-    lastName: account.lastName
-  });
 
   const handleChange = name => event => {
     actions.setAccount({ ...account, [name]: event.target.value });
-    setValues({ ...values, [name]: event.target.value });
   };
 
   return (
@@ -41,14 +36,14 @@ export default function ChangeDetailComponent({ account, actions }) {
           id='standard-name'
           label='firstName'
           className={classes.textField}
-          value={values.firstName}
+          value={account.firstName}
           onChange={handleChange('firstName')}
           margin='normal'
         />
         <TextField
           id='standard-uncontrolled'
           label='lastname'
-          value={values.lastName}
+          value={account.lastName}
           className={classes.textField}
           onChange={handleChange('lastName')}
           margin='normal'
