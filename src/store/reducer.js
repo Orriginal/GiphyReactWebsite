@@ -1,18 +1,21 @@
 import * as constants from './constants';
 
-const initialState = {
+export const giphyInitialState = {
   itemsArray: [],
-  account: {
-    loggedIn: true,
-    firstName: 'Jan',
-    lastName: 'Kuipers'
-  },
   filterOptions: {
     hasUser: false
   }
 };
 
-const GiphyReducer = (state = initialState, action) => {
+const AccountInitialState = {
+  account: {
+    loggedIn: true,
+    firstName: 'Jan',
+    lastName: 'Kuipers'
+  }
+};
+
+const GiphyReducer = (state = giphyInitialState, action) => {
   switch (action.type) {
     case constants.SET_ITEMS:
       return {
@@ -29,7 +32,7 @@ const GiphyReducer = (state = initialState, action) => {
   }
 };
 
-const AccountReducer = (state = initialState, action) => {
+const AccountReducer = (state = AccountInitialState, action) => {
   switch (action.type) {
     case constants.SET_ACCOUNT:
       return {

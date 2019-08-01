@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import AbsoluteWrapper from '../../core/components/AbsoluteWrapper';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -29,7 +30,7 @@ export default function ChangeDetailComponent({ account, actions }) {
   };
 
   return (
-    <>
+    <AbsoluteWrapper>
       <Grid container direction='column' justify='center' alignItems='center'>
         <h1>Change account details</h1>
         <TextField
@@ -49,6 +50,6 @@ export default function ChangeDetailComponent({ account, actions }) {
           margin='normal'
         />
       </Grid>
-    </>
+    </AbsoluteWrapper>
   );
 }

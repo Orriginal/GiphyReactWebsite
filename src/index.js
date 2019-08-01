@@ -17,43 +17,52 @@ import AccountOverviewContainer from './modules/account/account-overview-contain
 import AppBarContainer from './modules/app-bar/app-bar-container';
 import { useTransition, animated } from 'react-spring';
 import useRouter from './core/components/useRouter';
+import GiphyReducer, { giphyInitialState } from './store/reducer';
+import { StateProvider } from './core/components/state-provider';
 
 function App() {
-  // const { location } = useContext(__RouterContext);
-  // const transitions = useTransition(location, location => location.pathname, {
-  //   from: { opacity: 0, transform: 'translate(100%, 0)' },
-  //   enter: { opacity: 1, transform: 'translate(0%, 0)' },
-  //   leave: { opacity: 0, transform: 'translate(-50%, 0)' }
-  // });
-  console.log('Logged Outout: App -> useContext(__RouterContext)', useRouter());
+  const { location } = useContext(__RouterContext);
+  const transitions = useTransition(location, location => location.pathname, {
+    from: { opacity: 0, transform: 'translate(100%, 0)' },
+    enter: { opacity: 1, transform: 'translate(0%, 0)' },
+    leave: { opacity: 0, transform: 'translate(-50%, 0)' }
+  });
+
   return (
     <>
-      <Router>
-        {/* HTML element en attribute style-normalizations (ipv normalize.css)*/}
-        <CssBaseline />
-        <header>
-          <AppBarContainer search={false} />
-        </header>
-        <main>
-          <Switch>
-            <Route path='/' exact component={Homepage} />
-            <Route path='/item/:id' component={GiphyItemContainer} />
-            <Route path='/search/:value' component={Search} />
-            <Route
-              path='/account-details'
-              exact
-              component={AccountChangeDetailContainer}
-            />
-            <Route
-              path='/overview'
-              exact
-              component={AccountOverviewContainer}
-            />
-            <Route path='/*' exact component={Homepage} />
-          </Switch>
-        </main>
-        <footer />
-      </Router>
+      {/* HTML element en attribute style-normalizations (ipv normalize.css)*/}
+      <CssBaseline />
+      <header>
+        <AppBarContainer search={false} />
+      </header>
+      <main>
+        {transitions.map(({ item, props, key }) => (
+          <animated.div key={key} style={props}>
+            <Switch location={item}>
+              <StateProvider
+                initialState={giphyInitialState}
+                reducer={GiphyReducer}
+              >
+                <Route path='/' exact component={Homepage} />
+                <Route path='/search/:value' component={Search} />
+              </StateProvider>
+              <Route path='/item/:id' component={GiphyItemContainer} />
+              <Route
+                path='/account-details'
+                exact
+                component={AccountChangeDetailContainer}
+              />
+              <Route
+                path='/overview'
+                exact
+                component={AccountOverviewContainer}
+              />
+              <Route path='/*' exact component={Homepage} />
+            </Switch>
+          </animated.div>
+        ))}
+      </main>
+      <footer />
     </>
   );
 }
@@ -61,7 +70,9 @@ function App() {
 const rootElement = document.getElementById('root');
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>,
   rootElement
 );

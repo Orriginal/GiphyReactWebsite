@@ -7,6 +7,9 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import GridListTile from '@material-ui/core/GridListTile';
 import { Link } from 'react-router-dom';
 import FilterContainer from '../filter/filter-container';
+import AbsoluteWrapper from '../../core/components/AbsoluteWrapper';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useStateValue } from '../../core/components/state-provider';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,6 +33,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function GiphyGridComponent(props) {
   const classes = useStyles();
+  const [{ theme }, dispatch] = useStateValue();
+  console.log('Logged Outout: GiphyGridComponent -> theme', theme);
   const { itemsArray, filterOptions, actions } = props;
   const items = filterOptions.hasUser
     ? itemsArray.filter(item => {
@@ -52,6 +57,11 @@ export default function GiphyGridComponent(props) {
       col: [4, 6],
       maxPerRow: 5,
       rowHeight: 400
+    },
+    lg: {
+      col: [3, 4],
+      maxPerRow: 7,
+      rowHeight: 400
     }
   };
 
@@ -66,11 +76,14 @@ export default function GiphyGridComponent(props) {
         case windowWidth < 1000:
           setWindowPosition('ms');
           break;
-        case windowWidth < 1800:
+        case windowWidth < 1500:
           setWindowPosition('md');
           break;
+        case windowWidth < 2800:
+          setWindowPosition('lg');
+          break;
         default:
-          setWindowPosition('md');
+          setWindowPosition('lg');
           break;
       }
     };
@@ -111,31 +124,39 @@ export default function GiphyGridComponent(props) {
   };
 
   return (
-    <Box className={classes.root} cols={12}>
-      <FilterContainer />
-      <GridList
-        cellHeight={grid[windowPostition].rowHeight}
-        className={classes.gridList}
-        cols={12}
-      >
-        {items.map((item, key) => (
-          <GridListTile
-            key={item.images['fixed_width'].url}
-            cols={itemColCount(key)}
-          >
-            <img src={item.images['fixed_width'].url} alt='gif' />
-
-            <Link to={`/item/${item.id}`}>
-              <GridListTileBar
-                title={item.title}
-                titlePosition='top'
-                actionPosition='left'
-                className={classes.titleBar}
+    <AbsoluteWrapper>
+      <Box className={classes.root} cols={12}>
+        <FilterContainer />
+        <GridList
+          cellHeight={grid[windowPostition].rowHeight}
+          className={classes.gridList}
+          cols={12}
+        >
+          {items.map((item, key) => (
+            <GridListTile
+              key={item.images['fixed_width'].url}
+              cols={itemColCount(key)}
+            >
+              <LazyLoadImage
+                alt='gif'
+                height='100%'
+                src={item.images['fixed_width'].url}
+                width='100%'
+                style={{ objectFit: 'cover' }}
               />
-            </Link>
-          </GridListTile>
-        ))}
-      </GridList>
-    </Box>
+
+              <Link to={`/item/${item.id}`}>
+                <GridListTileBar
+                  title={item.title}
+                  titlePosition='top'
+                  actionPosition='left'
+                  className={classes.titleBar}
+                />
+              </Link>
+            </GridListTile>
+          ))}
+        </GridList>
+      </Box>
+    </AbsoluteWrapper>
   );
 }
